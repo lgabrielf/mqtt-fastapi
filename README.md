@@ -15,7 +15,7 @@ Iniciando o broker MQTT
 Copiando arquivos de configuração
 
 ```sh
- docker cp config\mosquitto.conf fastapi_mqtt:/mosquitto/config/mosquitto.conf
+ docker cp config/mosquitto.conf fastapi_mqtt:/mosquitto/config/mosquitto.conf
 ```
 
 ### ⚙ How to run
