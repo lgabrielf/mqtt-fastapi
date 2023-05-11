@@ -21,5 +21,15 @@ Copiando arquivos de configuração
 ### ⚙ How to run
 
 ```sh
- $ pip install -r requirements.txt 
+ pip install -r requirements.txt 
+```
+
+```sh
+ python main.py
+ python subscriber.py
+```
+E na pasta frontend
+
+```sh
+ npm start
 ```
