@@ -26,7 +26,7 @@ Copiando arquivos de configuração
 
 ```sh
  python main.py
- python subscriber.py
+ python publisher.py
 ```
 E na pasta frontend
 
