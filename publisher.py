@@ -1,6 +1,7 @@
 import time
 import random
 import paho.mqtt.client as mqtt
+import json
 
 # simula comportamento do CLP para teste via websocket
 client = mqtt.Client("Python")
@@ -42,7 +43,8 @@ def simulate_cpl():
             "c2": c2
         }
 
-        client.publish("topic/cpltest", payload=str(payload))
+        # json_payload = json.dumps(payload)
+        client.publish("topic/clptest", payload=str(payload))
         print(f"Published: {payload}")
         time.sleep(0.5)
     

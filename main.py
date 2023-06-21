@@ -2,17 +2,19 @@ from fastapi import FastAPI, WebSocket
 import paho.mqtt.client as mqtt
 from fastapi.middleware.cors import CORSMiddleware
 import asyncio
+import json
 
 app = FastAPI()
 
-ultima_mensagem = ""
+ultima_mensagem = None
+
 def on_message(client, userdata, msg):
     global ultima_mensagem
-    ultima_mensagem = str(msg.payload.decode("utf-8"))
+    ultima_mensagem = msg.payload.decode("utf-8")
 
 def on_connect(client, userdata, flags, rc):
     print("Conectado com sucesso ao broker MQTT.")
-    client.subscribe("topic/cpltest")
+    client.subscribe("topic/clptest")
 
 client = mqtt.Client()
 
@@ -25,7 +27,8 @@ client.loop_start()
 
 @app.get("/clp_test")
 async def clp_test():
-    return ultima_mensagem
+    mensagem_dict = json.loads(ultima_mensagem.replace("'", "\""))
+    return mensagem_dict
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
@@ -33,7 +36,7 @@ async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     print("Accepted")
     while True:
-        await websocket.send_text(ultima_mensagem)
+        await websocket.send_json(ultima_mensagem)
         await asyncio.sleep(0.5)
 
 app.add_middleware(
@@ -43,7 +46,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 if __name__ == '__main__':
     import uvicorn
